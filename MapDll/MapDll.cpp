@@ -52,6 +52,10 @@ namespace DLLMapPath{
 		Node* getNB(){
 			return neightbours;
 		}
+
+		Node getPreNode(){
+			return *preNode;
+		}
 	};
 
 	extern "C" {
@@ -62,7 +66,7 @@ namespace DLLMapPath{
 			Node* nodes = new Node[fieldWeight];
 			//Code Dij
 
-			for (size_t i = 0; i < fieldWeight; i++)
+			for (int i = 0; i < fieldWeight; i++)
 			{
 				bool visit = false;
 				if (map[i]>0){
@@ -71,7 +75,7 @@ namespace DLLMapPath{
 				nodes[i] =*new Node(INFINITE,i,visit);
 			}
 
-			for (size_t i = 0; i < fieldWeight; i++)
+			for (int i = 0; i < fieldWeight; i++)
 			{
 				int n = i - mapw;
 				int o = i + 1;
@@ -96,23 +100,43 @@ namespace DLLMapPath{
 			nodes[from].setDist(1);
 
 			Node u = nodes[from];
-			while (allVisited(nodes, fieldWeight) == 0){
+			while (allVisited(nodes, fieldWeight) == 0|| u.getID()==to){
 				
+				//Get Neightbours
 				Node* tmpNB = new Node[4];
 				tmpNB = u.getNB();
 
+				//Set Distance to the Neighbours
 				for (int i = 0; i < 4; i++){
-					
-						tmpNB[i].setPreNode(u);
-						tmpNB[i].setDist(
-							u.getDistance()
-							);
-					}
-				}			
+					if (!tmpNB[i].getFlag()){
+						if (tmpNB[i].getDistance() > u.getDistance() + 1){
+							tmpNB[i].setDist(u.getDistance() + 1);
+							tmpNB[i].setPreNode(u);
+						}					
+					}				
+				}
+				u.setFlag(true);
+				u=getSmallDisNode(nodes,fieldWeight);
+			}
+			int counter = 0;
+			while (u.getID() != from){
+				path[counter] = u.getID();
+				u = u.getPreNode();
+				counter++;
 			}
 			//Code Dij
 			printf("Weg berechnet! ;) \n\n");
 			return path;
+		}
+
+		Node getSmallDisNode(Node *nodes, int lengh){
+			Node smallest = nodes[0];
+			for (int i = 1; i < lengh; i++){
+				if (smallest.getDistance()>nodes[i].getDistance()){
+					smallest = nodes[i];
+				}
+			}
+			return smallest;
 		}
 
 		int allVisited(Node *nodes,int lengh){
