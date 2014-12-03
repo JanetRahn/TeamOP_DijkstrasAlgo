@@ -1,18 +1,13 @@
 #include "stdafx.h"
 #include "Node.h"
 #include "DLLManager.h"
-
-#include <stdio.h>
-#include <conio.h>
 namespace DLLMapPath{
 	extern "C" {
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapw, int maph, int pathlength) {
 			DLLManager m;
 			int* path = new int[pathlength];
 			int fieldWeight = mapw*maph;
-			getch(); printf("1"); //-------------------------------------------------------------
 			Node* nodes = new Node[fieldWeight];
-			getch(); printf("3"); //-------------------------------------------------------------
 			for (int i = 0; i < fieldWeight; i++)
 			{
 				bool visit = false;
