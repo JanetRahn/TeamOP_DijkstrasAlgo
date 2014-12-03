@@ -1,80 +1,26 @@
 #include "stdafx.h"
-#include <utility>
-#include <iostream>
+#include "Node.h"
+#include "DLLManager.h"
 
-
+#include <stdio.h>
+#include <conio.h>
 namespace DLLMapPath{
-
-	class Node {
-	public:
-		Node* preNode;
-		int distance;
-		bool flag;
-		int id;
-		Node *neightbours = new Node[4];
-
-		Node();
-
-		Node(int _dist, int _id, bool _flag){
-			distance = _dist;
-			id = _id;
-			flag = _flag;
-		}
-
-		void setDist(int dist){
-			distance = dist;
-		}
-
-		void setPreNode(Node pre){
-			*preNode = pre;
-		}
-
-		void setNB(Node* _neightbours){
-			neightbours = _neightbours;
-		}
-
-		void setFlag(bool flaged){
-			flag = flaged;
-		}
-
-		bool getFlag(){
-			return flag;
-		}
-
-		int getDistance(){
-			return distance;
-		}
-
-		int getID(){
-			return id;
-		}
-
-		Node* getNB(){
-			return neightbours;
-		}
-
-		Node getPreNode(){
-			return *preNode;
-		}
-	};
-
 	extern "C" {
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapw, int maph, int pathlength) {
-			printf("DLL berechnet weg von %d zu %d\n", from, to);
+			DLLManager m;
 			int* path = new int[pathlength];
 			int fieldWeight = mapw*maph;
+			getch(); printf("1"); //-------------------------------------------------------------
 			Node* nodes = new Node[fieldWeight];
-			//Code Dij
-
+			getch(); printf("3"); //-------------------------------------------------------------
 			for (int i = 0; i < fieldWeight; i++)
 			{
 				bool visit = false;
-				if (map[i]>0){
+				if (map[i] > 0){
 					visit = true;
 				}
 				nodes[i] =*new Node(INFINITE,i,visit);
 			}
-
 			for (int i = 0; i < fieldWeight; i++)
 			{
 				int n = i - mapw;
@@ -96,12 +42,10 @@ namespace DLLMapPath{
 				Node neightbours[4] = { nodes[n], nodes[o], nodes[s], nodes[w] };
 				nodes[i].setNB(neightbours);
 			}
-			
-			nodes[from].setDist(1);
+			nodes[from].setDist(0);
 
 			Node u = nodes[from];
-			while (allVisited(nodes, fieldWeight) == 0|| u.getID()==to){
-				
+			while (m.notVisited(nodes, fieldWeight) != 0 && u.getID()!=to){
 				//Get Neightbours
 				Node* tmpNB = new Node[4];
 				tmpNB = u.getNB();
@@ -116,7 +60,7 @@ namespace DLLMapPath{
 					}				
 				}
 				u.setFlag(true);
-				u=getSmallDisNode(nodes,fieldWeight);
+				u=m.getSmallDisNode(nodes,fieldWeight);
 			}
 			int counter = 0;
 			while (u.getID() != from){
@@ -125,28 +69,8 @@ namespace DLLMapPath{
 				counter++;
 			}
 			//Code Dij
-			printf("Weg berechnet! ;) \n\n");
+			delete[] nodes;
 			return path;
-		}
-
-		Node getSmallDisNode(Node *nodes, int lengh){
-			Node smallest = nodes[0];
-			for (int i = 1; i < lengh; i++){
-				if (smallest.getDistance()>nodes[i].getDistance()){
-					smallest = nodes[i];
-				}
-			}
-			return smallest;
-		}
-
-		int allVisited(Node *nodes,int lengh){
-			int counter = 0;
-			for (int i = 0; i < lengh; i++){
-				if (!nodes[i].getFlag){
-					counter++;
-				}
-			}
-			return counter;
 		}
 		__declspec(dllexport) void freeArray(int* pointer) {
 			delete[] pointer;
