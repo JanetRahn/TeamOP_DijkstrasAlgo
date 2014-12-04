@@ -154,7 +154,10 @@ namespace DLLMapPath{
 			}
 			path[counter] = from;
 			//Code Dij
-			delete[] nodes;
+			for (int i = 0; i < fieldWeight; i++){
+				delete nodes[i];
+			}
+			delete m;
 			return path;
 		}
 		__declspec(dllexport) void freeArray(int* pointer) {

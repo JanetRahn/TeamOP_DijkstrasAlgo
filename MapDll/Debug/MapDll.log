@@ -1,4 +1,4 @@
-﻿Der Buildvorgang wurde am 04.12.2014 14:06:23 gestartet.
+﻿Der Buildvorgang wurde am 04.12.2014 14:30:01 gestartet.
      1>Projekt "C:\Users\Steven\Dropbox\backum\dijkstra\TeamOP_DijkstrasAlgo\MapDll\MapDll.vcxproj" auf Knoten "2", Rebuild Ziel(e).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
@@ -12,11 +12,10 @@
          D:\Endwicklung\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\testprojekt\DllUser\bin\Debug\MapDll.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\..\testprojekt\DllUser\bin\Debug\MapDll.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\testprojekt\DllUser\bin\Debug\MapDll.lib" /MACHINE:X86 /DLL Debug\dllmain.obj
          Debug\MapDll.obj
          Debug\stdafx.obj
-         LINK : ..\..\testprojekt\DllUser\bin\Debug\MapDll.dll wurde nicht gefunden oder beim letzten inkrementellen Linkvorgang nicht erstellt; vollständiger Link wird durchgeführt.
             Bibliothek "..\..\testprojekt\DllUser\bin\Debug\MapDll.lib" und Objekt "..\..\testprojekt\DllUser\bin\Debug\MapDll.exp" werden erstellt.
          MapDll.vcxproj -> C:\Users\Steven\Dropbox\backum\dijkstra\TeamOP_DijkstrasAlgo\MapDll\..\..\testprojekt\DllUser\bin\Debug\MapDll.dll
      1>Die Erstellung des Projekts "C:\Users\Steven\Dropbox\backum\dijkstra\TeamOP_DijkstrasAlgo\MapDll\MapDll.vcxproj" ist abgeschlossen, Rebuild Ziel(e).
 
 Build erfolgreich.
 
-Verstrichene Zeit 00:00:01.09
+Verstrichene Zeit 00:00:00.90
