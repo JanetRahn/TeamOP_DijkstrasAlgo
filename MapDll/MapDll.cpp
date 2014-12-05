@@ -76,6 +76,11 @@ namespace DLLMapPath{
 	};
 	extern "C" {
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapw, int maph, int pathlength) {
+			int* path = new int[pathlength];
+			path[0] = from;
+			if (map[to]>0){
+				return path;
+			}
 			DLLManager *m;
 			m = new(DLLManager);;
 			int fieldWeight = mapw*maph;
@@ -146,7 +151,6 @@ namespace DLLMapPath{
 				}
 			}
 			int counter = 0;
-			int* path = new int[pathlength];
 			while (u->getID() != from){
 				path[counter] = u->getID();
 				u = u->getPreNode();
